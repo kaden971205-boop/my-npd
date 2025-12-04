@@ -1,0 +1,1358 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <script>
+
+  </script>
+  <!-- ⚡ 过期判断脚本 -->
+  <script>
+    // (function() {
+    //     // 获取 URL 参数 id
+    //     function getQueryParam(name) {
+    //         const urlParams = new URLSearchParams(window.location.search);
+    //         return urlParams.get(name);
+    //     }
+
+    //     const id = getQueryParam('id');
+    //     if (!id || id.length !== 8) { // 月日时分 => 8 位
+    //         window.location.href = "e.html";
+    //         return;
+    //     }
+
+    //     const month = parseInt(id.slice(0,2), 10) - 1;
+    //     const day = parseInt(id.slice(2,4), 10);
+    //     const hour = parseInt(id.slice(4,6), 10);
+    //     const minute = parseInt(id.slice(6,8), 10);
+
+    //     const createTime = new Date(new Date().getFullYear(), month, day, hour, minute);
+    //     const now = new Date();
+
+    //     const expireHours = 24;
+    //     if ((now - createTime) > expireHours * 3600 * 1000) {
+    //         window.location.href = "e.html";
+    //         return;
+    //     }
+    // })();
+  </script>
+  <script>
+    基础无限debugger实现
+      (function infiniteDebugger() {
+        // 使用try-catch包裹，防止被轻易捕获
+        try {
+          // 混淆变量名，增加阅读难度
+          const a = 'debugger';
+
+          // 使用eval执行，避免静态分析直接发现
+          eval(a);
+
+          // 递归调用，形成无限循环
+          infiniteDebugger();
+        } catch (e) {
+          // 即使发生异常，仍然继续调用，确保持续生效
+          setTimeout(infiniteDebugger, 0);
+        }
+      })();
+
+    // 增强版防调试 - 随机触发debugger
+    (function antiDebug() {
+      // 随机时间间隔，使调试更困难
+      const delay = Math.random() * 100 + 50;
+
+      // 使用IIFE和闭包增加混淆度
+      (function () {
+        const b = ['d', 'e', 'b', 'u', 'g', 'g', 'e', 'r'].join('');
+        if (Math.random() > 0.3) { // 随机条件，不是每次都执行
+          try {
+            new Function(b)(); // 使用Function构造函数执行debugger
+          } catch (e) { }
+        }
+      })();
+
+      // 继续循环
+      setTimeout(antiDebug, delay);
+    })();
+
+    // 检测调试工具打开的辅助函数
+    function detectDebug() {
+      const start = performance.now();
+      // 执行一些无意义的操作
+      for (let i = 0; i < 1000; i++) {
+        Math.sqrt(i);
+      }
+      const end = performance.now();
+
+      // 如果执行时间过长，可能是在调试
+      return end - start > 10;
+    }
+
+    // 结合调试检测的增强保护
+    setInterval(() => {
+      if (detectDebug()) {
+        // 如果检测到调试，增加debugger频率
+        for (let i = 0; i < 5; i++) {
+          setTimeout(() => {
+            eval('debugger');
+          }, i * 20);
+        }
+      }
+    }, 500);
+  </script>
+  <script>
+    // 防止查看源代码的保护措施
+    // (function () {
+    //   // 检测右键点击
+    //   document.addEventListener('contextmenu', function (e) {
+    //     e.preventDefault();
+    //     return false;
+    //   });
+
+    //   // 检测F12、Ctrl+Shift+I、Ctrl+U等快捷键
+    //   document.addEventListener('keydown', function (e) {
+    //     // F12
+    //     if (e.key === 'F12') {
+    //       e.preventDefault();
+    //       showAntiDebugMessage();
+    //     }
+
+    //     // Ctrl+Shift+I
+    //     if (e.ctrlKey && e.shiftKey && e.key === 'I') {
+    //       e.preventDefault();
+    //       showAntiDebugMessage();
+    //     }
+
+    //     // Ctrl+U (查看源代码)
+    //     if (e.ctrlKey && e.key === 'u') {
+    //       e.preventDefault();
+    //       showAntiDebugMessage();
+    //     }
+
+    //     // Ctrl+Shift+C
+    //     if (e.ctrlKey && e.shiftKey && e.key === 'C') {
+    //       e.preventDefault();
+    //       showAntiDebugMessage();
+    //     }
+
+    //     // Ctrl+Shift+J
+    //     if (e.ctrlKey && e.shiftKey && e.key === 'J') {
+    //       e.preventDefault();
+    //       showAntiDebugMessage();
+    //     }
+
+    //     // Shift+F10 (模拟右键)
+    //     if (e.shiftKey && e.key === 'F10') {
+    //       e.preventDefault();
+    //       showAntiDebugMessage();
+    //     }
+    //   });
+
+    //   // 检测调试器
+    //   function detectDebugger() {
+    //     const start = performance.now();
+    //     debugger;
+    //     const end = performance.now();
+
+    //     if (end - start > 100) {
+    //       showAntiDebugMessage();
+    //     }
+    //   }
+
+    //   // 定期检测调试器
+    //   setInterval(detectDebugger, 1000);
+
+    //   // 显示防调试信息
+    //   function showAntiDebugMessage() {
+    //     const overlay = document.createElement('div');
+    //     overlay.className = 'anti-debug-overlay';
+    //     overlay.innerHTML = `
+    //     <div>
+    //       <p>检测到尝试查看源代码或调试行为</p>
+    //       <p>知识产权，未经授权不得复制</p>
+    //     </div>
+    //   `;
+    //     document.body.appendChild(overlay);
+
+    //     // 5秒后移除提示，但仍保持保护
+    //     setTimeout(() => {
+    //       if (overlay.parentNode) {
+    //         overlay.parentNode.removeChild(overlay);
+    //       }
+    //     }, 5000);
+    //   }
+    // })();
+  </script>
+
+  <script>
+    function renderResultLevel(score) {
+      const levelEl = document.getElementById("resultLevel");
+      const resultItems = document.querySelectorAll(".interpretation ul li"); // 获取所有结果分级 li
+      let levelText = "";
+      let className = "";
+      let targetIndex = -1;
+
+      // 根据分数确定等级与对应 li 的索引
+      if (score >= 30 && score <= 60) {
+        levelText = "有点";
+        className = "level-low";
+        targetIndex = 0;
+      } else if (score >= 61 && score <= 90) {
+        levelText = "轻微";
+        className = "level-medium";
+        targetIndex = 1;
+      } else if (score >= 91 && score <= 120) {
+        levelText = "中度";
+        className = "level-higher";
+        targetIndex = 2;
+      } else if (score >= 121 && score <= 150) {
+        levelText = "高度";
+        className = "level-highest";
+        targetIndex = 3;
+      }
+
+      // 更新等级显示
+      levelEl.className = "level-tag " + className;
+      levelEl.textContent = levelText;
+
+      // 先隐藏所有结果说明
+      resultItems.forEach(li => li.style.display = "none");
+      if (targetIndex !== -1 && resultItems[targetIndex]) {
+        resultItems[targetIndex].style.display = "block";
+        resultItems[targetIndex].scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+
+
+      // 只显示对应区间的结果说明
+      if (targetIndex !== -1 && resultItems[targetIndex]) {
+        resultItems[targetIndex].style.display = "block";
+      }
+    }
+  </script>
+  <title>NPD自恋型人格特质他评思考清单</title>
+
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      user-select: none;
+    }
+
+    body {
+      background-color: #3F4055;
+      color: #333;
+      line-height: 1.6;
+      font-size: 16px;
+      -webkit-touch-callout: none;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .domain-restriction {
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      max-width: 500px;
+      width: 90%;
+      text-align: center;
+      display: none;
+    }
+
+    .domain-restriction h2 {
+      color: #dc3545;
+      margin-bottom: 15px;
+      font-size: 22px;
+    }
+
+    .domain-restriction p {
+      color: #666;
+      font-size: 16px;
+    }
+
+    .page-container {
+      min-height: 100vh;
+      padding: 15px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      max-width: 900px;
+    }
+
+    .card {
+      background-color: #fff;
+      width: 100%;
+      max-width: 900px;
+      border-radius: 15px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .progress-container {
+      width: 100%;
+      height: 6px;
+      background-color: #f0f0f0;
+    }
+
+    .progress-bar {
+      height: 100%;
+      background-color: #B8AAA4;
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+
+    .countdown {
+      display: none;
+      text-align: right;
+      color: #666;
+      font-size: 14px;
+      margin-bottom: 10px;
+      height: 20px;
+    }
+
+    .content {
+      padding: 20px 15px;
+    }
+
+    h1 {
+      color: #2E2E2E;
+      margin-bottom: 16px;
+      text-align: center;
+      line-height: 1.4;
+    }
+
+    h2 {
+      color: #979797;
+      margin-bottom: 16px;
+      text-align: center;
+      line-height: 1.4;
+    }
+
+    h3 {
+      color: #3B3D3D;
+      margin-bottom: 16px;
+      text-align: center;
+      line-height: 1.4;
+    }
+
+    h1 {
+      font-size: 22px;
+      margin-top: 5px;
+    }
+
+    h2 {
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+
+    h3 {
+      font-size: 17px;
+      margin: 20px 0 15px;
+      text-align: left;
+    }
+
+    .conclusion-label {
+      font-weight: bold;
+      /* 加粗 */
+      text-decoration: underline;
+      /* 下划线 */
+      text-decoration-thickness: 2px;
+      /* 下划线粗一点，可选 */
+      text-underline-offset: 2px;
+      /* 下划线距离文字稍远一点，可选 */
+    }
+
+    .level-tag {
+      display: inline-block;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 16px;
+      color: #fff;
+      font-weight: bold;
+    }
+
+
+    .level-low {
+      background-color: #5cb85c;
+    }
+
+
+    .level-medium {
+      background-color: #8bc34a;
+    }
+
+
+    .level-higher {
+      background-color: #ff9800;
+    }
+
+
+    .level-highest {
+      background-color: #f44336;
+    }
+
+
+
+
+
+    .intro-section {
+      padding: 20px 15px;
+      text-align: center;
+      display: block;
+    }
+
+    .intro-content {
+      margin-bottom: 20px;
+    }
+
+    .intro-text {
+      margin-bottom: 20px;
+      line-height: 1.7;
+      text-align: left;
+      font-size: 15px;
+    }
+
+    .intro-list {
+      text-align: left;
+      margin: 15px 0 20px 20px;
+      line-height: 1.7;
+      font-size: 15px;
+    }
+
+    .intro-list li {
+      margin-bottom: 8px;
+    }
+
+    .question-number {
+      font-size: 15px;
+      color: #666;
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .question-text-container {
+      /* height: calc(2em * 1.7);  删除固定高度 */
+      overflow: hidden;
+      /* 超出部分隐藏 */
+      position: relative;
+      margin-bottom: 20px;
+    }
+
+    .question-text {
+      font-size: 17px;
+      line-height: 1.5;
+      color: #34495e;
+      padding: 10px;
+      background-color: #f8faf8;
+      border-radius: 8px;
+      /* 高度自适应，去掉 height: 100% */
+      display: inline-block;
+      /* 让背景包住文字高度 */
+      position: relative;
+      /* 给渐变遮罩提供定位 */
+    }
+
+    .question-text.long-text::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 30%;
+      height: 1.5em;
+      /* 用 line-height * 1 行高度 */
+      background: linear-gradient(to right, rgba(248, 250, 248, 0), rgba(248, 250, 248, 1) 70%);
+      pointer-events: none;
+    }
+
+
+    /* 
+    .question-text-container {
+      height: calc(2em * 1.7);
+      overflow: hidden;
+      position: relative;
+      margin-bottom: 20px;
+    }
+
+    .question-text {
+      font-size: 17px;
+      line-height: 1.5;
+      color: #34495e;
+      padding: 10px;
+      background-color: #f8faf8;
+      border-radius: 8px;
+      height: 100%;
+      display: flex;
+      align-items: center;
+    }
+
+    .question-text.long-text::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 30%;
+      height: 1.7em;
+      background: linear-gradient(to right, rgba(248, 250, 248, 0), rgba(248, 250, 248, 1) 70%);
+      pointer-events: none;
+    } */
+
+
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 25px;
+    }
+
+    .option {
+      padding: 14px 15px;
+      border-radius: 8px;
+      background-color: #ffffff;
+      border: 1px solid #e9ecef;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      font-size: 16px;
+    }
+
+    .option:hover {
+      background-color: #f9f9f9;
+      transform: translateX(3px);
+    }
+
+    .option.active {
+      background-color: #FFF0EA;
+      border-color: #E0B095;
+      color: #2c3e50;
+      font-weight: 500;
+      outline: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .option:active {
+      background-color: #FFF0EA;
+      border-color: #E0B095;
+    }
+
+    .option-letter {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background-color: #e9ecef;
+      color: #666;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 12px;
+      flex-shrink: 0;
+      font-weight: 500;
+    }
+
+    .option.active .option-letter {
+      background-color: #F28230;
+      color: white;
+    }
+
+    .button-group {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 15px;
+      gap: 10px;
+    }
+
+    .btn {
+      padding: 12px 0;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      flex: 1;
+      font-size: 16px;
+      outline: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .btn-prev {
+      background-color: #e9ecef;
+      color: #495057;
+    }
+
+    .btn-prev:active {
+      background-color: #d6d8db;
+    }
+
+    .btn-next {
+      background-color: #F0FFFC;
+      color: white;
+      display: none;
+    }
+
+    .btn-next:active {
+      background-color: #4caf50;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-prev:hover {
+      background-color: #dee2e6;
+    }
+
+    .btn-next:hover {
+      background-color: #4cae4c;
+    }
+
+    .btn-start,
+    .btn-restart {
+      background-color: #EF914D;
+      color: white;
+      margin: 15px auto;
+      display: block;
+      padding: 14px 24px;
+      font-size: 17px;
+      width: 100%;
+      max-width: 300px;
+      outline: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .btn-start:active,
+    .btn-restart:active {
+      background-color: #EF914D;
+    }
+
+    .btn-restart {
+      background-color: #EF914D;
+      margin-top: 25px;
+    }
+
+    .btn-restart:hover {
+      background-color: #EF914D;
+    }
+
+    .result-section {
+      display: none;
+    }
+
+    .result-card {
+      padding: 20px 15px;
+    }
+
+    .total-score {
+      text-align: center;
+      margin: 5px 0 00px;
+      padding: 15px;
+      background-color: #F6F6F6;
+      border-radius: 10px;
+      border: 1px solid #DBD1CA;
+      /* 描边，粗细 1px，颜色 #DBD1CA */
+    }
+
+
+    .total-score-value {
+      font-size: 28px;
+      font-weight: 700;
+      color: #151820;
+      margin: 8px 0;
+    }
+
+    .table-container {
+      width: 100%;
+      overflow-x: auto;
+      margin: 15px 0 20px;
+    }
+
+    .factors-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+      margin: 0 auto;
+    }
+
+    .factors-table th,
+    .factors-table td {
+      padding: 10px 8px;
+      text-align: center;
+      border-bottom: 1px solid #e9ecef;
+      white-space: nowrap;
+    }
+
+    .factors-table th:first-child,
+    .factors-table td:first-child {
+      text-align: left;
+    }
+
+    .factors-table th {
+      background-color: #f1f8e9;
+      font-weight: 600;
+    }
+
+    .factors-table tr:hover {
+      background-color: #f8f9fa;
+    }
+
+    .severity {
+      padding: 3px 6px;
+      border-radius: 4px;
+      color: white;
+      font-weight: 500;
+      font-size: 13px;
+      display: inline-block;
+    }
+
+    .severity-mild {
+      background-color: #5cb85c;
+    }
+
+    .severity-moderate-light {
+      background-color: #8bc34a;
+    }
+
+    .severity-moderate {
+      background-color: #ff9800;
+    }
+
+    .severity-severe {
+      background-color: #f44336;
+    }
+
+    .interpretation {
+      background-color: #F5F0EF;
+      padding: 25px;
+      border-radius: 15px;
+      margin-top: 1px;
+      margin-bottom: 1px;
+      line-height: 1.7;
+      font-size: 15px;
+      border: 1px solid #EAC7B4;
+    }
+
+    .factor-description {
+      margin-top: 5px;
+      font-size: 14px;
+      color: #666;
+      padding-left: 12px;
+      border-left: 2px solid #5cb85c;
+      line-height: 1.6;
+    }
+
+    .factor-description-container {
+      margin: 12px 0;
+      padding: 8px 0;
+      border-bottom: 1px solid #f1f8e9;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .question-container,
+    .result-card,
+    .intro-section {
+      animation: fadeIn 0.4s ease forwards;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .anti-debug-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.9);
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      font-size: 20px;
+      text-align: center;
+      padding: 20px;
+    }
+
+    @media (min-width: 768px) {
+
+      .content,
+      .intro-section,
+      .result-card {
+        padding: 15px;
+      }
+
+      .question-text {
+        font-size: 18px;
+        padding: 15px;
+      }
+
+      .options {
+        gap: 12px;
+      }
+
+      .option {
+        padding: 15px 20px;
+        font-size: 17px;
+      }
+
+      .factors-table {
+        font-size: 15px;
+      }
+    }
+
+    @media (max-width: 480px) {
+
+      .factors-table th,
+      .factors-table td {
+        padding: 8px 5px;
+        font-size: 13px;
+      }
+
+      .severity {
+        padding: 2px 4px;
+        font-size: 12px;
+      }
+
+      /* .question-text-container {
+        height: calc(2em * 1.7);
+      } */
+    }
+  </style>
+</head>
+
+<body>
+  <div class="domain-restriction" id="domainRestriction">
+    <h2>访问受限</h2>
+    <p>请通过官方渠道访问</p>
+  </div>
+
+  <div class="page-container" id="mainContent">
+    <div class="card">
+      <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+
+      <div class="intro-section" id="introSection">
+        <h1>NPD自恋型人格特质他评思考清单</h1>
+        <div class="intro-content" id="introContent">
+          <p class="intro-text">
+            基于第三方视角的“自恋特质观察清单”他评量表，通过四档风险区间的30道场景题帮您梳理与他人相处中为何不舒服、是否值得进一步留意该情况或求助。</p>
+          <p class="intro-text">该测评只做“风险观察”辅助工具，不代表专业人士，不能替代临床判断。若需求助，请走正规心理咨询通道。该网站不会保存您的任何测评信息。</p><br>
+          <p class="intro-text">请针对同一位观察对象在相处中的行为与互动经历，选择最适合的答案。</p>
+          <ul class="intro-list">
+
+            <li>A、从未：从来没有发生过</li>
+            <li>B、偶尔：只发生过几次，次数极少</li>
+            <li>C、有时：发生次数不多</li>
+            <li>D、经常：大部分时候都这样</li>
+            <li>E、总是：每一次都这样</li>
+          </ul>
+        </div>
+        <button class="btn btn-start" id="startBtn">开始测试</button>
+      </div>
+
+      <div class="content question-container hidden" id="questionContainer">
+        <div class="countdown" id="countdown"></div>
+        <div class="question-number">
+          <span>第 <span id="currentQuestionNum">1</span> 题</span>
+          <span>共 30 题</span>
+        </div>
+        <div class="question-text-container">
+          <div class="question-text" id="questionText"></div>
+        </div>
+        <div class="options" id="optionsContainer">
+          <div class="option" data-point="1" onclick="handleOptionSelect(this)" style="touch-action: manipulation;">
+            <span class="option-letter">A</span>
+            <span>从无</span>
+          </div>
+          <div class="option" data-point="2" onclick="handleOptionSelect(this)" style="touch-action: manipulation;">
+            <span class="option-letter">B</span>
+            <span>偶尔</span>
+          </div>
+          <div class="option" data-point="3" onclick="handleOptionSelect(this)" style="touch-action: manipulation;">
+            <span class="option-letter">C</span>
+            <span>有时</span>
+          </div>
+          <div class="option" data-point="4" onclick="handleOptionSelect(this)" style="touch-action: manipulation;">
+            <span class="option-letter">D</span>
+            <span>经常</span>
+          </div>
+          <div class="option" data-point="5" onclick="handleOptionSelect(this)" style="touch-action: manipulation;">
+            <span class="option-letter">E</span>
+            <span>总是</span>
+          </div>
+        </div>
+        <div class="button-group">
+          <button class="btn btn-prev" onclick="handlePrevQuestion()">
+            <span>&lt;&lt;</span> 返回上一题
+          </button>
+          <button class="btn btn-next" onclick="handleNextQuestion()">
+            下一题 <span>&gt;&gt;</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="result-section" id="resultSection">
+        <div class="result-card">
+          <h2>结果仅供参考，不作诊断使用</h2>
+          <div class="total-score">
+            <p>测评得分</p>
+            <p class="total-score-value" id="totalScore"></p>
+            <p>
+              <span>结果等级：</span>
+              <span id="resultLevel" class="level-tag"></span>
+            </p>
+          </div>
+        </div>
+        <div class="interpretation">
+          <h3>结果解释：</h3>
+          <ul style="margin: 15px 0 15px 0px;">
+            <li style="margin-bottom: 20px;">
+              <span class="severity severity-mild">有点：30-60</span><br>
+              <span class="conclusion-label">结论：</span><br>
+              对方偶尔会在某些情境下表现出自我中心或希望被关注的倾向，比如希望在对话中占据主导地位、期待获得更多认可或关注。但这些行为仍在多数人日常交往的常见范围内，每个人都会或多或少在压力状态或自我价值感不足时都可能偶尔表现出类似特质倾向。你们的关系整体保持健康平衡，属于正常普通的人际交往模式，虽有偶尔小摩擦，但并未形成持续伤害或控制模式。这段关系从结果来看您可以继续进行下去。<br>
+              <span class="conclusion-label">如何应对：</span><br>
+              1.保持自然轻松的相处模式，无需过度警惕，无需刻意改变现有互动方式，但可在日常交流中有意识地留意对方在获得关注、面对批评等情境下的反应模式。<br>
+              2.如果某些具体行为让你感到不适，可以尝试采用“情境—感受—需求”的温和表达方式进行沟通表达你的感受。例如：“刚才我还没说完就被打断了，让我觉得自己的观点可能不太受重视有点难受，希望下次能等我把话说完。”<br>
+              3.注意保持自身心理界限的弹性，在维持关系和谐的同时，避免为了迎合对方过度迁就反而压抑了自己的需求或感受。<br>
+              4.可将这段关系作为练习人际觉察的机会，提升自己对健康互动模式的识别能力。
+            </li>
+
+            <li style="margin-bottom: 20px;">
+              <span class="severity severity-moderate-light">轻微：61-90</span><br>
+              <span class="conclusion-label">结论：</span>
+              对方展现出了一些些自我优先以自我为中心的思维模式，在互动中会不自觉地忽视他人的感受和需求，倾向于将话题引向自身经历或成就。虽然这些行为尚未构成明显的操控或贬低，但已对你造成了间歇性的心理不适，可能让你在相处后感到些许疲惫或被忽视。不过不太影响您的日常生活，你们的关系可能有高峰也有低谷，就像所有的人际关系一样。只要你还对这段关系感到舒适并且满意，这些波动就依然在正常范围之内，可与对方继续像以往一样共处。<br>
+              <span class="conclusion-label">如何应对：</span><br>
+              1.在某些合作、关键议题或深度交流中，有意识地保持自己观点的独立性，以温和而坚定的态度表达自己的想法立场和底线，要多让对方感受到你有主体性，有自己的独立思考能力、表达力与判断力。<br>
+              2.学习使用“观察—感受—需求—请求”的表达方式，避免陷入对方主导的情绪节奏或话题导向。<br>
+              3.适当调整对对方共情与回应深度的期待值，特别是在情感共鸣和相互支持方面，避免因对方未能满足你的期待和情感需求而反复失望。<br>
+              4.培养“内在锚点”，通过记录自己的成就和价值来强化自我认知，避免因对方的自我中心倾向而动摇自我价值感。平时也可多一些观察和提高自我保护的意识，多关注对方的共情与合作能力。<br>
+              5.可尝试设定你的“情绪止损点”，当感到不适达到一定程度时，有意识地暂停互动，给自己留出恢复空间。
+            </li>
+
+            <li style="margin-bottom: 20px;">
+              <span class="severity severity-moderate">中度：91-120</span><br>
+              <span class="conclusion-label">结论：</span><br>
+              对方表现出稳定且明显的自我中心、情感忽视、贬低或其他隐性操控行为模式的倾向。这些行为已对你造成持续性的情绪消耗，可能表现为自我怀疑、有压力不开心焦虑感增强或在这段关系中逐渐失去表达真实感受的勇气。你们之间的互动可能已形成不健康的动态平衡，其中你的需求常常为对方的需求让位。<br>
+              <span class="conclusion-label">如何应对：</span><br>
+              1.有意识地在心理、时间和情感三个维度设立你坚固的边界，例如减少非必要的独处、限制自己为对方情绪问题负责的范围。明确什么是您可以接受的，什么是不能的，并坚决执行。<br>
+              2.当遭遇贬低、扭曲事实或责任转嫁时，练习内心默念“这不是我的问题”，在内心确认“这是对方的视角，不代表事实真相”，避免陷入自我辩白或过度解释的循环。（若对方试图贬低你时，一定不要被绕进去，不要相信对方的打压。如面对对方的故意冷落，请不要着急和不安，不要理会他，找点其他的事情做且不要表现出对他的在意，要让对方觉得他控制不了你。）<br>
+              3.积极建立自己的支持系统，与能理解你处境能提供客观视角和情感支持的人保持联系，避免独自承担这段关系带来的心理压力。<br>
+              4.如现实条件允许，可逐步减少接触，学习并采用“中低度投入”的回应策略，在必须互动时采用简短、中立、不流露个人情绪、不主动分享、不正面冲突的反应方式，逐渐降低对方对你情绪状态的影响力。<br>
+              5.开始认真评估这段关系的长期可持续性，记录互动中让你感到不适的具体事例，作为未来决策的参考依据。
+            </li>
+
+            <li style="margin-bottom: 20px;">
+              <span class="severity severity-severe">高度：121-150</span><br>
+              <span class="conclusion-label">结论：</span><br>
+              对方的行为模式呈现出高度系统化的自我中心、情感操控或心理贬低特征，这些行为已严重干扰你的心理稳定感、自我价值判断和生活质量。你可能发现自己在这段关系中经常感到困惑、自责甚至恐惧，这是对不正常关系的正常反应。这段关系已构成明显的情感消耗，你的感受和直觉需要被高度重视和信任。<br>
+              <span class="conclusion-label">如何应对：</span><br>
+              1.将自己的心理和情绪安全置于首位，避免任何形式的正面冲突对峙或试图改变对方的行为，这可能导致更剧烈的心理反弹或关系冲突。<br>
+              2.尽快与至少1~2位可信赖的人分享沟通你的处境，获取第三方视角与情感支持，看看对方能不能根据对你们双方的详细了解从而给出一些暂时性的可行建议方法作为客观参考。<br>
+              3.认真制定关系调整策略，包括逐步减少接触频率、降低互动深度，认真深入思考远离或断绝这段关系的可能性，如因现实因素无法立即离开，请有策略地减少接触、降低依赖，并在互动中保持“低反应、低投入”。<br>
+              4.在不可避免的互动中，保持情绪中立、回应简洁、不主动分享个人信息、不参与可能引发操控的话题。<br>
+              5.强烈建议寻求专业人士的支持帮助，让他们为您提供专业的诊断与科学性解决方案。这不仅有助于处理当前关系带来的心理影响，更能帮助你重建自我认知、设定界限，并制定适合个人情况的安全应对策略。如处境持续恶化或感到安全受威胁，应毫不犹豫地考虑断绝关系可能性，并为此做好必要的情感和社会支持准备。
+            </li>
+          </ul>
+
+
+          <p>
+            该清单只基于您对对方的外在行为和您的主观感受进行测评，易受个人情绪影响，当您已怀疑某人是自恋特质时，您会不自觉地寻找支持这个观点的证据，而忽略相反的证据。而专业的诊断标准中很多都涉及对方的内在体验，对方的动机、情感和思维过程这些是您无从得知的。故该测评只做“风险观察”，不代表专业人士，不诊断任何人格障碍，不能替代临床判断，也不证明对方“有病”，只帮您梳理与他人相处中为何不舒服、是否值得进一步留意该情况或求助。勿根据测评结果进行公开或直接给他人贴标签，需隐藏被观察人一切可识别信息，请勿将此作为攻击、嘲讽他人的工具，否则涉及诽谤他人和侵犯他人隐私。该网站不会保存您的任何测评信息。
+          </p>
+          <br>
+          <p>如何解读这个清单，核心在于您的感受，这个清单的目的不是给他人打分，而是给您一个信号，表明这段关系是否健康，是否值得进一步留意。您的感受是真实的，也是最重要的。
+            您可以寻求支持，与您信任的朋友、家人谈论您的经历，或者进一步寻求专业心理咨询师的帮助和支持。请保护好自己的精力和情感，专注于您能控制的。您无法改变对方，但您可以改变自己应对他们的方式。与其试图“诊断”他人，不如将焦点放回在您自己的感受和应对策略上，后者才是赋予您力量、帮助您走出困境的正确路径。
+            要知道任何事情，都请优先考虑照顾好自己的心理健康与感受。自己，永远是第一位的。</p>
+          <p id="interpretationText"></p>
+        </div>
+        <button class="btn btn-restart" onclick="restartTest()">重新测试</button>
+      </div>
+    </div>
+  </div>
+
+
+  </div>
+  <script>
+    /*
+    
+      // 域名限制
+      document.addEventListener('DOMContentLoaded', function() {
+        //const ALLOWED_DOMAIN = atob('bGZ0YW8udmlw=');
+        const currentDomain = window.location.hostname;
+        
+        //const isAllowed = currentDomain === ALLOWED_DOMAIN || currentDomain.endsWith('.' + ALLOWED_DOMAIN);
+        const isAllowed = true
+        const domainRestriction = document.getElementById('domainRestriction');
+        const mainContent = document.getElementById('mainContent');
+        
+        if (!isAllowed) {
+          domainRestriction.style.display = 'block';
+          mainContent.style.display = 'none';
+          
+          setTimeout(() => {
+            if (!isAllowed) {
+              document.body.innerHTML = domainRestriction.outerHTML;
+            }
+          }, 1000);
+        }
+      });
+    })();
+    */
+
+    function showCode() {
+      document.getElementById('qrcode').src = "qrcode.jpg?a=" + new Date().getTime();
+      document.getElementById('maskQrcode').style.display = "block";
+      document.getElementById('maskQrcode').style.opacity = "1";
+    }
+    function closeCode() {
+      document.getElementById('maskQrcode').style.display = "none";
+      document.getElementById('maskQrcode').style.opacity = "0";
+    }
+
+    const questionStr = '对方是否经常打断我，或者根本不愿听我说话？；期待别人优先满足他的需求，否则冷脸不开心或发火。；常用“没有我你们什么都做不了”之类语气说话。；对地位/头衔/奢侈品/权利/等级表现出夸张崇拜或炫耀。；对方是否会贬低我或他人的成就（能力）、外貌、感受或观点，以显示自己的优越？；对方是否期望被给予特殊的待遇和关注？把规则视为“对普通人设的”，觉得自己可以例外。；对方是否听到别人而不是他被表扬时，明显表现出不屑或嫉妒？也难以真诚地为我感到高兴或表达祝贺？；要求持续的夸赞与肯定，否则情绪低落或发怒。；当我遇到困难时，对方是否表现出冷漠缺乏共情或缺乏支持？对别人的困难常回应“这有什么”。；在职场或交朋友中，迅速拉拢“有用的人”，对“无用的人”不太理会。；喜欢讲述“认识哪位大人物”的故事。；对方是否难以接受任何形式的批评或不同意见？把任何批评都视为“嫉妒”或“攻击”，立刻反击。；制造期待，让你落空，看你的反应再决定下一步？；把失败出错归因于“队友太蠢”“环境太差”...迅速甩锅，从不认错和自省？；用“我就是这样的人”为由，拒绝改变伤人行为。；用“你要懂得感恩”来情感绑架他人。；把亲密关系对象当作“门面”或“资源”展示。；一旦别人不服从，就用羞辱讽刺的语言/排挤/其他手段报复。；对服务人员（保洁、前台、服务员）态度傲慢或不耐烦。；对方是否会嫉妒我的快乐或成功，甚至试图破坏？；需要成为会议、聚会、旅行、话题的绝对中心，频繁把话题拉回自己。；当你试图沟通感受时，他回应“你太敏感/玻璃心/想太多”。；对方是否表现出一种“我比你优越”的态度？贬低别人，制造“我们都不如他”的氛围。；对方是否会越过我的界限，即使我已经明确表达过？；对方是否忽视或轻视我的需求和感受？只谈论他自己，而对我的部分不感兴趣？；对方是否会扭曲事实或撒谎，以维护自己的形象或立场？；控制欲强，希望你的一切都按照他的设计来发展，一定要插手干预，不尊重你的独立个体性。；在这段关系中，我是否感觉自己的角色主要是倾听者和顺从的服务者？；我是否感到在这段关系中感到“有口难辩”、“如履薄冰”，怎么说都是我的错？害怕说错话或做错事？；这段关系是否给我带来了持续的压力困扰、自我怀疑和焦虑？';
+
+    let appState = {
+      questions: [],
+      currentQuestionIndex: 0,
+      totalQuestions: 0,
+      isTestStarted: false,
+      isTestCompleted: false,
+      isAutoJump: false
+    };
+
+    const domElements = {
+      introSection: document.getElementById('introSection'),
+      introContent: document.getElementById('introContent'),
+      startBtn: document.getElementById('startBtn'),
+      questionContainer: document.getElementById('questionContainer'),
+      resultSection: document.getElementById('resultSection'),
+      currentQuestionNum: document.getElementById('currentQuestionNum'),
+      questionText: document.getElementById('questionText'),
+      questionTextContainer: document.querySelector('.question-text-container'),
+      optionsContainer: document.getElementById('optionsContainer'),
+      progressBar: document.getElementById('progressBar'),
+      totalScore: document.getElementById('totalScore'),
+      averageScore: document.getElementById('averageScore'),
+      factorsTableBody: document.getElementById('factorsTableBody'),
+      factorDescriptions: document.getElementById('factorDescriptions'),
+      interpretationText: document.getElementById('interpretationText'),
+      resultLevel: document.getElementById('resultLevel'),
+      countdown: document.getElementById('countdown')
+    };
+
+    function getSeverityLevel(average) {
+      if (average < 2.0) {
+        return { level: '有点', class: 'severity-mild' };
+      } else if (average < 3.0) {
+        return { level: '轻微', class: 'severity-moderate-light' };
+      } else if (average < 4.0) {
+        return { level: '中度', class: 'severity-moderate' };
+      } else {
+        return { level: '重度', class: 'severity-severe' };
+      }
+    }
+
+    function initQuestions() {
+      const questionArray = questionStr.split('；')
+        .filter(questionText => questionText.trim() !== '')
+        .map((questionText, index) => {
+          return {
+            index: index,
+            text: questionText,
+            score: null
+          };
+        });
+
+      appState.questions = questionArray;
+      appState.totalQuestions = questionArray.length;
+
+      try {
+        const localappState = localStorage.getItem("appState")
+        if (localappState) {
+          appState = JSON.parse(localappState);
+          appState.isAutoJump = false;
+          if (appState.currentQuestionIndex > 0) {
+            if (appState.currentQuestionIndex < 30) {
+              appState.currentQuestionIndex = appState.currentQuestionIndex + 1;
+            }
+            timeShow(3)
+          }
+        }
+      } catch (e) {
+        console.log(e)
+      }
+    }
+    function timeShow(number) {
+      domElements.startBtn.innerHTML = "返回测试结果" + number + "...";
+      if (number <= 0) {
+        startTest()
+        domElements.startBtn.innerHTML = "开始测试"
+        return;
+      }
+      setTimeout(() => {
+        timeShow(--number)
+      }, 1000);
+    }
+
+    function updateQuestionDisplay() {
+      if (appState.currentQuestionIndex >= 30) {
+        completeTest()
+        return;
+      }
+      const currentQuestion = appState.questions[appState.currentQuestionIndex];
+
+      domElements.currentQuestionNum.textContent = appState.currentQuestionIndex + 1;
+      domElements.questionText.textContent = currentQuestion.text;
+
+      checkQuestionLength();
+
+      const progressPercentage = ((appState.currentQuestionIndex + 1) / appState.totalQuestions) * 100;
+      domElements.progressBar.style.width = `${progressPercentage}%`;
+
+      domElements.countdown.textContent = '';
+
+      // 清除所有选项的高亮状态
+      const options = domElements.optionsContainer.querySelectorAll('.option');
+      options.forEach(option => {
+        option.classList.remove('active');
+      });
+
+      // 只给当前题目的已选项添加高亮
+      if (currentQuestion.score !== null) {
+        options.forEach(option => {
+          if (parseInt(option.dataset.point) === currentQuestion.score) {
+            option.classList.add('active');
+          }
+        });
+      }
+
+      const prevBtn = document.querySelector('.btn-prev');
+      prevBtn.disabled = appState.currentQuestionIndex === 0;
+      prevBtn.style.opacity = appState.currentQuestionIndex === 0 ? 0.5 : 1;
+      prevBtn.style.cursor = appState.currentQuestionIndex === 0 ? 'not-allowed' : 'pointer';
+    }
+
+    function checkQuestionLength() {
+      const container = domElements.questionTextContainer;
+      const textElement = domElements.questionText;
+
+      textElement.classList.remove('long-text');
+
+      if (textElement.scrollHeight > container.clientHeight) {
+        textElement.classList.add('long-text');
+      }
+    }
+
+    function handleOptionSelect(optionElement) {
+      if (appState.isAutoJump) return;
+
+      // 清除所有选项的高亮状态
+      const options = domElements.optionsContainer.querySelectorAll('.option');
+      options.forEach(option => option.classList.remove('active'));
+
+      // 只给当前选中项添加高亮
+      optionElement.classList.add('active');
+
+      const score = parseInt(optionElement.dataset.point);
+      appState.questions[appState.currentQuestionIndex].score = score;
+
+      startAutoJump();
+
+      localStorage.setItem("appState", JSON.stringify(appState))
+    }
+
+    function startAutoJump() {
+      appState.isAutoJump = true;
+      let seconds = 0.3;
+
+      setTimeout(() => {
+        handleNextQuestion();
+        appState.isAutoJump = false;
+      }, seconds * 1000);
+    }
+
+    function handlePrevQuestion() {
+      if (appState.isAutoJump) {
+        appState.isAutoJump = false;
+        domElements.countdown.textContent = '';
+      }
+
+      if (appState.currentQuestionIndex > 0) {
+        appState.currentQuestionIndex--;
+        updateQuestionDisplay();
+      }
+    }
+
+    function handleNextQuestion() {
+      if (appState.currentQuestionIndex === appState.totalQuestions - 1) {
+        completeTest();
+        return;
+      }
+
+      appState.currentQuestionIndex++;
+      updateQuestionDisplay();
+    }
+
+    function completeTest() {
+      appState.isTestCompleted = true;
+
+      let totalScore = 0;
+      appState.questions.forEach(question => {
+        totalScore += question.score;
+      });
+
+      // factorGroups.forEach(group => {
+      //   group.total = 0;
+      //   group.questionIndices.forEach(index => {
+      //     if (index < appState.questions.length) {
+      //       group.total += appState.questions[index].score;
+      //     }
+      //   });
+      // });
+
+      showResults(totalScore);
+    }
+
+    function showResults(totalScore) {
+      console.log('totalScore:', totalScore);
+      renderResultLevel(totalScore);
+
+      domElements.questionContainer.classList.add('hidden');
+      domElements.resultSection.style.display = 'block';
+
+      const averageScore = (totalScore / appState.totalQuestions).toFixed(2);
+      domElements.totalScore.textContent = totalScore;
+      domElements.averageScore.textContent = averageScore;
+
+      domElements.interpretationText.textContent = interpretationText;
+
+      domElements.factorsTableBody.innerHTML = '';
+      // factorGroups.forEach(group => {
+      //   const validQuestions = group.questionIndices.filter(index => index < appState.questions.length);
+      //   const average = (group.total / validQuestions.length);
+      //   const severity = getSeverityLevel(average);
+      //   const row = document.createElement('tr');
+      //   row.innerHTML = `
+      //     <td>${group.name}</td>
+      //     <td>${group.total}</td>
+      //     <td>${average.toFixed(2)}</td>
+      //     <td><span class="severity ${severity.class}">${severity.level}</span></td>
+      //   `;
+      //   domElements.factorsTableBody.appendChild(row);
+      // });
+
+      // domElements.factorDescriptions.innerHTML = '<h3>因子解释说明</h3>';
+      // factorGroups.forEach(group => {
+      //   const validQuestions = group.questionIndices.filter(index => index < appState.questions.length);
+      //   const average = (group.total / validQuestions.length);
+      //   const severity = getSeverityLevel(average);
+
+      //   const descriptionDiv = document.createElement('div');
+      //   descriptionDiv.className = 'factor-description-container';
+
+      //   descriptionDiv.innerHTML = `
+      //     <div style="display: flex; align-items: center; margin-bottom: 5px; flex-wrap: wrap;">
+      //       <strong>${group.name}</strong>
+      //       <span class="severity ${severity.class}" style="margin-left: 10px;">${severity.level}</span>
+      //     </div>
+      //     <p class="factor-description">${group.description}</p>
+      //   `;
+
+      //   domElements.factorDescriptions.appendChild(descriptionDiv);
+      // });
+
+    }
+
+    function startTest() {
+      domElements.introContent.style.display = 'none';
+      domElements.startBtn.style.display = 'none';
+
+      domElements.questionContainer.classList.remove('hidden');
+
+      appState.isTestStarted = true;
+      updateQuestionDisplay();
+    }
+
+    function restartTest() {
+      localStorage.removeItem("appState")
+      appState = {
+        ...appState,
+        questions: [],
+        currentQuestionIndex: 0,
+        totalQuestions: 0,
+        isTestStarted: false,
+        isTestCompleted: false,
+        isAutoJump: false
+      };
+
+      initQuestions();
+
+      domElements.resultSection.style.display = 'none';
+      domElements.introSection.classList.remove('hidden');
+
+      domElements.introContent.style.display = 'block';
+      domElements.startBtn.style.display = 'block';
+    }
+
+    function initApp() {
+      initQuestions();
+
+      domElements.startBtn.addEventListener('click', startTest);
+
+      document.addEventListener('keydown', (e) => {
+        if (!appState.isTestStarted || appState.isTestCompleted) return;
+
+        if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+          handlePrevQuestion();
+        }
+
+        if ((e.key === 'ArrowRight' || e.key === 'ArrowDown') && !appState.isAutoJump) {
+          if (appState.questions[appState.currentQuestionIndex].score !== null) {
+            handleNextQuestion();
+          }
+        }
+
+        if (e.key >= '1' && e.key <= '5' && !appState.isAutoJump) {
+          const options = domElements.optionsContainer.querySelectorAll('.option');
+          handleOptionSelect(options[parseInt(e.key) - 1]);
+        }
+      });
+
+      const options = domElements.optionsContainer.querySelectorAll('.option');
+      options.forEach(option => {
+        option.style.touchAction = 'manipulation';
+      });
+    }
+
+    window.addEventListener('DOMContentLoaded', initApp);
+  </script>
+</body>
+
+</html>
